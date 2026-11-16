@@ -1,0 +1,29 @@
+{
+  "name": "bestlap",
+  "version": "0.1.0",
+  "description": "Open-source, lightweight sim-racing overlay for Linux (Le Mans Ultimate & multi-sim)",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "node src/index.ts",
+    "start:mock": "node src/index.ts --provider=mock",
+    "start:lmu": "node src/index.ts --provider=lmu-rest",
+    "start:shm": "node src/index.ts --provider=lmu-shm",
+    "test": "node --test tests/*.test.ts",
+    "overlay": "npx electron overlay/main.cjs",
+    "setup:lmu-plugin": "node scripts/setup-lmu-plugin.ts"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "keywords": [
+    "sim-racing",
+    "overlay",
+    "linux",
+    "le-mans-ultimate",
+    "telemetry",
+    "racelab",
+    "proton"
+  ],
+  "license": "MIT"
+}

@@ -1,0 +1,360 @@
+.leaderboard-widget {
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-sans);
+}
+
+.detached-widget-frame .leaderboard-widget {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+}
+
+.detached-widget-frame .lb-body {
+  overflow-y: auto;
+}
+
+/* Top Split Header matching RaceLab multi-class layout */
+.lb-top-bar {
+  display: grid;
+  grid-template-columns: 1fr 186px;
+  align-items: center;
+  height: 28px;
+  background: #0e1015;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.lb-top-left {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  height: 100%;
+}
+
+.lb-session-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+.lb-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-amber);
+}
+.lb-status-dot.connected { background: var(--accent-green); }
+.lb-status-dot.disconnected { background: var(--accent-red); }
+
+.lb-car-total {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: #cbd5e1;
+}
+
+.lb-top-right {
+  display: grid;
+  grid-template-columns: 44px 48px 1fr;
+  align-items: center;
+  height: 100%;
+  padding: 0 10px 0 6px;
+  background: #0e1015;
+  font-size: 10px;
+  font-weight: 600;
+  color: #cbd5e1;
+}
+
+.lb-body {
+  display: flex;
+  flex-direction: column;
+  background: #0f1116;
+}
+
+/* Class Section Header */
+.lb-class-header {
+  display: grid;
+  grid-template-columns: 1fr 186px;
+  align-items: center;
+  height: 24px;
+  background: #14171f;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.lb-class-left {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px 0 6px;
+}
+
+.lb-class-tag-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lb-class-pill {
+  font-size: 10px;
+  font-weight: 800;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  padding: 2px 7px;
+  border-radius: 3px;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.lb-sof-text {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: #e2e8f0;
+}
+
+.lb-class-count {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 800;
+  padding: 1px 7px;
+  border-radius: 3px;
+  color: #ffffff;
+}
+
+.lb-class-right {
+  height: 100%;
+  background: #14171f;
+}
+
+/* Class Color Themes (RaceLab inspired) */
+[data-class='LMGT3'] .lb-class-pill,
+[data-class='LMGT3'] .lb-class-count,
+.lb-row[data-class='LMGT3'] .lb-car-badge { background: #c92a61; }
+
+[data-class='HYPERCAR'] .lb-class-pill,
+[data-class='HYPERCAR'] .lb-class-count,
+.lb-row[data-class='HYPERCAR'] .lb-car-badge { background: #b8860b; }
+
+[data-class='LMP2'] .lb-class-pill,
+[data-class='LMP2'] .lb-class-count,
+.lb-row[data-class='LMP2'] .lb-car-badge { background: #0284c7; }
+
+[data-class='GTE'] .lb-class-pill,
+[data-class='GTE'] .lb-class-count,
+.lb-row[data-class='GTE'] .lb-car-badge { background: #059669; }
+
+[data-class='UNKNOWN'] .lb-class-pill,
+[data-class='UNKNOWN'] .lb-class-count,
+.lb-row[data-class='UNKNOWN'] .lb-car-badge { background: #475569; }
+
+/* Driver Row */
+.lb-row {
+  display: grid;
+  grid-template-columns: 1fr 186px;
+  align-items: center;
+  height: 25px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+
+.lb-row:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.lb-row.is-focused {
+  box-shadow: inset 0 0 0 1.5px #00c2ff;
+  background: rgba(0, 194, 255, 0.12);
+}
+
+.lb-row-left {
+  display: grid;
+  grid-template-columns: 22px 38px 1fr auto 34px 22px 28px;
+  align-items: center;
+  column-gap: 5px;
+  padding: 0 8px 0 6px;
+  min-width: 0;
+}
+
+.lb-row-left.no-rank {
+  grid-template-columns: 22px 38px 1fr auto 34px 22px;
+}
+
+.lb-energy-pill {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 3px;
+  text-align: center;
+  background: rgba(56, 189, 248, 0.14);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.lb-energy-pill.low {
+  background: rgba(248, 113, 113, 0.16);
+  color: #f87171;
+  border-color: rgba(248, 113, 113, 0.4);
+}
+
+.lb-pos-box {
+  height: 18px;
+  border-radius: 3px;
+  background: #f8fafc;
+  color: #0f172a;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lb-car-badge {
+  height: 18px;
+  border-radius: 2px;
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lb-driver-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: #f1f5f9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lb-row.is-player .lb-driver-name {
+  color: #eab308;
+  font-weight: 700;
+}
+
+.lb-row.is-focused:not(.is-player) .lb-driver-name {
+  color: #38bdf8;
+}
+
+.lb-pit-group {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid #ca8a04;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.lb-lap-tag {
+  background: #ca8a04;
+  color: #0f172a;
+  padding: 1px 4px;
+}
+
+.lb-pit-time {
+  background: #0f1116;
+  color: #facc15;
+  padding: 1px 4px;
+}
+
+/* Tire Compound Badge */
+.lb-tire-badge {
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.lb-tire-badge.tire-S { background: #ef4444; color: #ffffff; }
+.lb-tire-badge.tire-M { background: #eab308; color: #0f172a; }
+.lb-tire-badge.tire-H { background: #f8fafc; color: #0f172a; }
+.lb-tire-badge.tire-W { background: #38bdf8; color: #0f172a; }
+.lb-tire-badge.tire-U { background: #334155; color: #cbd5e1; }
+
+.lb-rank-pill {
+  height: 17px;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lb-rank-pill.rank-PLATINUM { background: #e2e8f0; color: #0f172a; }
+.lb-rank-pill.rank-GOLD { background: #facc15; color: #0f172a; }
+.lb-rank-pill.rank-SILVER { background: #94a3b8; color: #0f172a; }
+.lb-rank-pill.rank-BRONZE { background: #b45309; color: #fef3c7; }
+
+/* Right Deep-Black Section */
+.lb-row-right {
+  display: grid;
+  grid-template-columns: 44px 48px 1fr;
+  align-items: center;
+  height: 100%;
+  padding: 0 10px 0 6px;
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 11px;
+}
+
+.lb-pos-delta {
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+}
+.lb-pos-delta.up { color: #4ade80; }
+.lb-pos-delta.down { color: #f87171; }
+.lb-pos-delta.flat { color: #94a3b8; }
+
+.lb-int {
+  text-align: right;
+  color: #e2e8f0;
+}
+
+.lb-last {
+  text-align: right;
+  font-weight: 600;
+  color: #f8fafc;
+}
+
+.lb-last.overall-best {
+  color: #c084fc;
+  background: rgba(15, 17, 22, 0.65);
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+
+.lb-last.class-best {
+  color: #4ade80;
+  background: rgba(15, 17, 22, 0.65);
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+
+.lb-empty {
+  padding: 20px;
+  text-align: center;
+  color: var(--text-secondary);
+}

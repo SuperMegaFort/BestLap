@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BestLap — Overlay Control Dock</title>
+    <link rel="stylesheet" href="/styles/theme.css" />
+    <style>
+      .dock-panel {
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+        background: rgba(14, 17, 24, 0.96);
+        border: 1.5px solid var(--accent-cyan);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      .dock-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 12px;
+        background: var(--bg-panel-header);
+        border-bottom: 1px solid var(--border-subtle);
+        -webkit-app-region: drag;
+        cursor: move;
+      }
+
+      .dock-title {
+        font-weight: 700;
+        font-size: 12px;
+        color: var(--accent-cyan);
+        letter-spacing: 0.04em;
+      }
+
+      .dock-shortcut {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--text-muted);
+      }
+
+      .dock-body {
+        flex: 1;
+        padding: 10px 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .dock-widget-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 6px 8px;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--border-subtle);
+      }
+
+      .dock-widget-meta {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--text-muted);
+      }
+
+      .dock-footer {
+        display: flex;
+        gap: 8px;
+        padding: 8px 12px;
+        border-top: 1px solid var(--border-subtle);
+        background: rgba(255, 255, 255, 0.02);
+      }
+
+      .dock-btn {
+        flex: 1;
+        padding: 6px 8px;
+        border-radius: 5px;
+        border: 1px solid var(--border-subtle);
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--text-primary);
+        font-size: 11px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .dock-btn.primary {
+        background: rgba(0, 194, 255, 0.22);
+        border-color: var(--accent-cyan);
+        color: var(--accent-cyan);
+      }
+
+      .dock-btn.danger:hover {
+        background: rgba(248, 113, 113, 0.25);
+        border-color: var(--accent-red);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dock-panel">
+      <div class="dock-header">
+        <span class="dock-title" id="dockTitle">BESTLAP · LOCKED</span>
+        <span class="dock-shortcut">Alt+Shift+L</span>
+      </div>
+      <div class="dock-body" id="widgetsList"></div>
+      <div class="dock-footer">
+        <button class="dock-btn primary" id="lockBtn">Enable Edit Mode</button>
+        <button class="dock-btn" id="resetBtn">Reset</button>
+        <button class="dock-btn danger" id="quitBtn">Quit</button>
+      </div>
+    </div>
+
+    <script type="module">
+      const api = window.bestlapOverlay;
+      const widgetsList = document.getElementById('widgetsList');
+      const dockTitle = document.getElementById('dockTitle');
+      const lockBtn = document.getElementById('lockBtn');
+
+      function renderState(state) {
+        if (!state) return;
+        dockTitle.textContent = state.editMode ? 'BESTLAP · EDIT MODE' : 'BESTLAP · LOCKED';
+        lockBtn.textContent = state.editMode ? 'Lock (Click-Through)' : 'Enable Edit Mode';
+
+        widgetsList.innerHTML = '';
+        for (const w of state.widgets) {
+          const row = document.createElement('label');
+          row.className = 'dock-widget-row';
+
+          const left = document.createElement('div');
+          const title = document.createElement('div');
+          title.textContent = w.title;
+          title.style.fontWeight = '600';
+          const meta = document.createElement('div');
+          meta.className = 'dock-widget-meta';
+          meta.textContent = `${w.x},${w.y} · ${w.width}×${w.height}`;
+          left.append(title, meta);
+
+          const toggle = document.createElement('input');
+          toggle.type = 'checkbox';
+          toggle.checked = Boolean(w.enabled);
+          toggle.addEventListener('change', () => {
+            api?.setWidgetEnabled(w.id, toggle.checked);
+          });
+
+          row.append(left, toggle);
+          widgetsList.appendChild(row);
+        }
+      }
+
+      if (api) {
+        api.onLayoutUpdated((state) => renderState(state));
+        api.getState().then((state) => renderState(state));
+
+        document.getElementById('lockBtn').addEventListener('click', () => api.toggleEditMode());
+        document.getElementById('resetBtn').addEventListener('click', () => api.resetLayout());
+        document.getElementById('quitBtn').addEventListener('click', () => api.quitApp());
+      }
+    </script>
+  </body>
+</html>

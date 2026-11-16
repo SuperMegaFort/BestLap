@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BestLap Overlay</title>
+    <link rel="stylesheet" href="/styles/theme.css" />
+    <link rel="stylesheet" href="/styles/leaderboard.css" />
+  </head>
+  <body>
+    <div class="overlay-toolbar" id="toolbar">
+      <span>BestLap Overlay</span>
+      <button class="toolbar-btn" id="lockBtn">Unlock Layout</button>
+    </div>
+
+    <main class="overlay-canvas" id="canvas">
+      <section class="widget-shell" id="leaderboard-shell"></section>
+    </main>
+
+    <script type="module">
+      import { TelemetryClient } from '/js/ws-client.js';
+      import { WidgetManager } from '/js/widget-manager.js';
+      import { LeaderboardWidget } from '/js/widgets/leaderboard.js';
+
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('preview') === '1' || !window.bestlapOverlay) {
+        document.body.classList.add('preview-mode');
+      }
+
+      const manager = new WidgetManager();
+      const lbShell = document.getElementById('leaderboard-shell');
+      manager.register('leaderboard', lbShell, { x: 24, y: 24 });
+
+      const client = new TelemetryClient();
+      const leaderboard = new LeaderboardWidget(lbShell, {
+        maxPerClass: 6,
+        onSelectDriver: (driverId) => client.send({ type: 'set-focus', driverId }),
+      });
+
+      client.onStatus((status) => {
+        if (status === 'disconnected') leaderboard.setConnectionState('disconnected');
+      });
+      client.onFrame((frame) => leaderboard.render(frame));
+      client.connect();
+
+      const lockBtn = document.getElementById('lockBtn');
+      const toolbar = document.getElementById('toolbar');
+      let unlocked = false;
+
+      const toggleLock = (nextState) => {
+        unlocked = typeof nextState === 'boolean' ? nextState : !unlocked;
+        manager.setUnlocked(unlocked);
+        lockBtn.textContent = unlocked ? 'Lock Layout' : 'Unlock Layout';
+      };
+
+      lockBtn.addEventListener('click', () => toggleLock());
+
+      // Sync with Electron global shortcut (Alt+Shift+L) when running inside overlay shell
+      if (window.bestlapOverlay?.onLockChanged) {
+        window.bestlapOverlay.onLockChanged((locked) => {
+          toggleLock(!locked);
+          toolbar.classList.toggle('hidden', locked);
+        });
+      }
+    </script>
+  </body>
+</html>

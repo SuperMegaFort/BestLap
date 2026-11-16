@@ -1,0 +1,16 @@
+# Rust build artifacts
+/target/
+**/*.rs.bk
+
+# Node / Electron dependencies & build outputs
+node_modules/
+dist/
+out/
+
+# Compiled Wine/Proton bridge binary (rebuilt via npm run setup:lmu-plugin)
+/bridge/*.exe
+
+# OS / Editor / Logs
+.DS_Store
+*.log
+.env

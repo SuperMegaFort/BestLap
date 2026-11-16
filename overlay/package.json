@@ -1,0 +1,35 @@
+{
+  "name": "bestlap-overlay-shell",
+  "version": "0.2.0",
+  "description": "BestLap transparent multi-window sim-racing overlay for Linux",
+  "private": true,
+  "main": "main.cjs",
+  "scripts": {
+    "start": "electron main.cjs",
+    "start:mock": "electron main.cjs --mock",
+    "pack:linux": "electron-builder --linux AppImage deb"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "org.bestlap.overlay",
+    "productName": "BestLap",
+    "files": [
+      "main.cjs",
+      "preload.cjs",
+      "layout-store.cjs",
+      "window-manager.cjs"
+    ],
+    "extraResources": [
+      { "from": "../src", "to": "src" },
+      { "from": "../ui", "to": "ui" },
+      { "from": "../config", "to": "config" }
+    ],
+    "linux": {
+      "target": ["AppImage", "deb", "tar.gz"],
+      "category": "Game"
+    }
+  }
+}

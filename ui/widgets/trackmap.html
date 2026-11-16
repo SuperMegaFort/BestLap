@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BestLap — Track Map</title>
+    <link rel="stylesheet" href="/styles/theme.css" />
+    <link rel="stylesheet" href="/styles/widget-chrome.css" />
+    <link rel="stylesheet" href="/styles/trackmap.css" />
+  </head>
+  <body>
+    <div class="detached-widget-frame" id="frame">
+      <div class="widget-content-slot" id="trackmap-root"></div>
+    </div>
+
+    <script type="module">
+      import { TelemetryClient } from '/js/ws-client.js';
+      import { initDetachedWidgetShell } from '/js/widget-shell.js';
+      import { TrackMapWidget } from '/js/widgets/trackmap.js';
+
+      initDetachedWidgetShell(document.getElementById('frame'), 'Track Map');
+
+      const widget = new TrackMapWidget(document.getElementById('trackmap-root'));
+      const client = new TelemetryClient();
+      client.onFrame((frame) => widget.render(frame));
+      client.connect();
+    </script>
+  </body>
+</html>

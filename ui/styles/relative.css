@@ -1,0 +1,111 @@
+.relative-widget {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.rel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 10px;
+  background: var(--bg-panel-header);
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.rel-body {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.rel-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 32px 42px 1fr 48px 66px;
+  align-items: center;
+  height: 29px;
+  padding: 0 10px;
+  column-gap: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  font-variant-numeric: tabular-nums;
+}
+
+.rel-row::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 2px;
+  bottom: 2px;
+  width: 3px;
+  border-radius: 0 2px 2px 0;
+  background: var(--class-unknown);
+}
+
+.rel-row[data-class='HYPERCAR']::before { background: var(--class-hypercar); }
+.rel-row[data-class='LMP2']::before { background: var(--class-lmp2); }
+.rel-row[data-class='LMP3']::before { background: var(--class-lmp3); }
+.rel-row[data-class='LMGT3']::before { background: var(--class-lmgt3); }
+.rel-row[data-class='GTE']::before { background: var(--class-gte); }
+
+.rel-row.is-player {
+  background: var(--bg-player);
+  box-shadow: inset 0 0 0 1px var(--border-player);
+}
+
+.rel-row.is-ahead-lap .rel-driver {
+  color: var(--accent-red);
+}
+
+.rel-row.is-behind-lap .rel-driver {
+  color: #38bdf8;
+}
+
+.rel-pos {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+.rel-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 4px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.rel-driver {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rel-delta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-align: right;
+  color: var(--text-primary);
+}
+
+.rel-delta.ahead {
+  color: var(--accent-green);
+}
+
+.rel-delta.behind {
+  color: var(--accent-amber);
+}

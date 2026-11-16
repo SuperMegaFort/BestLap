@@ -1,0 +1,112 @@
+:root {
+  --bg-panel: rgba(12, 14, 19, 0.86);
+  --bg-panel-header: rgba(18, 22, 30, 0.94);
+  --bg-row-even: rgba(255, 255, 255, 0.02);
+  --bg-row-hover: rgba(255, 255, 255, 0.06);
+  --bg-player: rgba(0, 194, 255, 0.14);
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-player: rgba(0, 194, 255, 0.55);
+
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  --accent-cyan: #00c2ff;
+  --accent-purple: #c084fc;
+  --accent-green: #4ade80;
+  --accent-amber: #fbbf24;
+  --accent-red: #f87171;
+
+  --class-hypercar: #ef4444;
+  --class-lmp2: #3b82f6;
+  --class-lmp3: #a855f7;
+  --class-lmgt3: #f97316;
+  --class-gte: #10b981;
+  --class-unknown: #64748b;
+
+  --font-sans: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  line-height: 1.3;
+  overflow: hidden;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Preview background when opened directly in a normal browser with ?preview=1 */
+body.preview-mode {
+  background: radial-gradient(circle at 20% 20%, #161b26 0%, #090b10 100%);
+}
+
+.overlay-canvas {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.widget-shell {
+  position: absolute;
+  border-radius: 8px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(10px);
+  contain: layout style;
+  overflow: hidden;
+}
+
+.widget-shell.unlocked {
+  border-color: rgba(0, 194, 255, 0.55);
+  cursor: move;
+}
+
+.overlay-toolbar {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: var(--bg-panel-header);
+  border: 1px solid var(--border-subtle);
+  z-index: 100;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.overlay-toolbar.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.toolbar-btn {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.toolbar-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+}

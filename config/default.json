@@ -1,0 +1,32 @@
+{
+  "server": {
+    "host": "127.0.0.1",
+    "port": 7777,
+    "broadcastHz": 20
+  },
+  "telemetry": {
+    "provider": "auto",
+    "lmuRest": {
+      "baseUrl": "http://127.0.0.1:6397",
+      "pollIntervalMs": 50,
+      "timeoutMs": 1000
+    },
+    "lmuShm": {
+      "pollIntervalMs": 16,
+      "shmDir": "/dev/shm"
+    },
+    "mock": {
+      "tickIntervalMs": 100,
+      "carCount": 18
+    }
+  },
+  "ui": {
+    "theme": "dark",
+    "leaderboard": {
+      "maxRows": 15,
+      "showClassBadge": true,
+      "showBestLap": true,
+      "gapMode": "interval"
+    }
+  }
+}

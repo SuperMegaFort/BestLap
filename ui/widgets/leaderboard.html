@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BestLap — Leaderboard</title>
+    <link rel="stylesheet" href="/styles/theme.css" />
+    <link rel="stylesheet" href="/styles/widget-chrome.css" />
+    <link rel="stylesheet" href="/styles/leaderboard.css" />
+  </head>
+  <body>
+    <div class="detached-widget-frame" id="frame">
+      <div class="widget-content-slot" id="lb-root"></div>
+    </div>
+
+    <script type="module">
+      import { TelemetryClient } from '/js/ws-client.js';
+      import { initDetachedWidgetShell } from '/js/widget-shell.js';
+      import { LeaderboardWidget } from '/js/widgets/leaderboard.js';
+
+      initDetachedWidgetShell(document.getElementById('frame'), 'Leaderboard');
+
+      const params = new URLSearchParams(window.location.search);
+      const client = new TelemetryClient();
+      const leaderboard = new LeaderboardWidget(document.getElementById('lb-root'), {
+        maxPerClass: Number(params.get('rows')) || 60,
+        onSelectDriver: (driverId) => {
+          client.send({ type: 'set-focus', driverId });
+        },
+      });
+
+      client.onStatus((status) => {
+        if (status === 'disconnected') leaderboard.setConnectionState('disconnected');
+      });
+      client.onFrame((frame) => leaderboard.render(frame));
+      client.connect();
+    </script>
+  </body>
+</html>
